@@ -17,11 +17,24 @@ private:
 	UPROPERTY(VisibleAnywhere)
 		UProceduralMeshComponent* mesh;
 
-	UPROPERTY(EditAnywhere, Category="Generation")
+	UPROPERTY(EditAnywhere, Category="Mesh Generation")
 		int plane_size;
 
-	UPROPERTY(EditAnywhere, Category = "Generation")
+	UPROPERTY(EditAnywhere, Category = "Mesh Perlin")
 		float z_multiplier;
+
+	UPROPERTY(EditAnywhere, Category = "Mesh Perlin")
+		float x_multiplier;
+
+	UPROPERTY(EditAnywhere, Category = "Mesh Perlin")
+		float y_multiplier;
+
+	UPROPERTY(EditAnywhere, Category = "Mesh Perlin")
+		float x_offset;
+
+	UPROPERTY(EditAnywhere, Category = "Mesh Perlin")
+		float y_offset;
+
 
 
 public:	
@@ -31,10 +44,23 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	virtual void OnConstruction(const FTransform& Transform) override;
 
-	void CreateTriangle();
+	void CreateMesh();
+	void UpdateMesh();
 	void PostActorCreated();
 	void PostLoad();
+
+	//vertices matrix (x,y,z)
+	TArray<FVector> vertices;
+
+	//order in which vertices should be joined together creating a mesh of triangles
+	TArray<int32> Triangles;
+	TArray<FLinearColor> vertexColors;
+	TArray<FVector> normals;
+	TArray<FVector2D> UV0;
+	TArray<FProcMeshTangent> tangents;
+
 
 public:	
 	// Called every frame
