@@ -14,9 +14,9 @@ AMyActor::AMyActor()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	plane_size = 10;
-	x_multiplier = 0.2f;
-	y_multiplier = 0.2f;
-	z_multiplier= 500.0f;
+	freq_x = 0.2f;
+	freq_y = 0.2f;
+	height_multiplier= 500.0f;
 
 	x_offset = 0.0f;
 	y_offset = 0.0f;
@@ -43,9 +43,9 @@ void AMyActor::CreateMesh()
 	{
 		for (size_t y = 0; y < plane_size; y++)
 		{
-			float perlin_generated = FMath::PerlinNoise2D(FVector2D(x_multiplier * (x) + x_offset, y_multiplier *y + y_offset ));
+			float perlin_generated = FMath::PerlinNoise2D(FVector2D(freq_x * (x) + x_offset, freq_y *y + y_offset ));
 			
-			float generated_z = perlin_generated * z_multiplier;
+			float generated_z = perlin_generated * height_multiplier;
 			/*UE_LOG(LogTemp, Warning, TEXT("Generated z = %f"), generated_z * 500.0f);*/
 			vertices.Add(FVector(x * 100, y * 100, generated_z)); 
 			//vertices.Add(FVector(x*100, y*100, FMath::RandRange(0.0f, 100.0f)));
@@ -93,8 +93,8 @@ void AMyActor::UpdateMesh(){
 	int32 count = 0;
 	for (auto& vertice : vertices)
 	{
-		float perlin_generated = FMath::PerlinNoise2D(FVector2D(x_multiplier * (vertice.X/100.0f) +x_offset, y_multiplier * (vertice.Y/100.0f)+y_offset));
-		float generated_z = perlin_generated * z_multiplier;
+		float perlin_generated = FMath::PerlinNoise2D(FVector2D(freq_x * (vertice.X/100.0f) +x_offset, freq_y * (vertice.Y/100.0f)+y_offset));
+		float generated_z = perlin_generated * height_multiplier;
 		UE_LOG(LogTemp, Warning, TEXT("Updated, Z = %f"), generated_z);
 
 		vertice = FVector(vertice.X, vertice.Y, generated_z);

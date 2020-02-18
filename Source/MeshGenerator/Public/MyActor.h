@@ -21,13 +21,13 @@ private:
 		int plane_size;
 
 	UPROPERTY(EditAnywhere, Category = "Mesh Perlin")
-		float z_multiplier;
+		float height_multiplier;
 
 	UPROPERTY(EditAnywhere, Category = "Mesh Perlin")
-		float x_multiplier;
+		float freq_x;
 
 	UPROPERTY(EditAnywhere, Category = "Mesh Perlin")
-		float y_multiplier;
+		float freq_y;
 
 	UPROPERTY(EditAnywhere, Category = "Mesh Perlin")
 		float x_offset;
